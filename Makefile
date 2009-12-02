@@ -5,12 +5,12 @@
 # Dynamically detect/generate version file as necessary
 # This file will define a variable called VERSION.
 .PHONY: .FORCE-VERSION-FILE
-VERSION-FILE: .FORCE-VERSION-FILE
+todo-source/lib/TODO-VERSION-FILE: .FORCE-VERSION-FILE
 	@./GEN-VERSION-FILE
--include VERSION-FILE
+-include todo-source/lib/TODO-VERSION-FILE
 
 # Maybe this will include the version in it.
-todo.sh: VERSION-FILE
+todo.sh: todo-source/lib/TODO-VERSION-FILE
 
 # For packaging
 DISTFILES := todo.cfg
