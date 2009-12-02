@@ -3,7 +3,10 @@
 # NOTE:  Todo.sh requires the .todo/config configuration file to run.
 # Place the .todo/config file in your home directory or use the -d option for a custom location.
 
-[ -f VERSION-FILE ] && . VERSION-FILE || VERSION="@DEV_VERSION@"
+TODO_TOPDIR=$(dirname "$0")
+echo TOPDIR=${TODO_TOPDIR}
+[ -f ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE ] && . ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE || VERSION="@DEV_VERSION@"
+
 version() { sed -e 's/^    //' <<EndVersion
         TODO.TXT Command Line Interface v$VERSION
         

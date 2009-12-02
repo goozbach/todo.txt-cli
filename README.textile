@@ -2,6 +2,10 @@ h1. TODO.TXT Command Line Interface
 
 A simple and extensible shell script for managing your todo.txt file.
 
+h2. This branch
+
+I've made this branch to be stowable so I may put it into my stowed bindir
+
 h2. "Downloads":http://github.com/ginatrapani/todo.txt-cli/downloads
 
 "Download the latest stable release":http://github.com/ginatrapani/todo.txt-cli/downloads for use on your desktop or server.
