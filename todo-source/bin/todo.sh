@@ -4,7 +4,6 @@
 # Place the .todo/config file in your home directory or use the -d option for a custom location.
 
 TODO_TOPDIR=$(dirname "$0")
-echo TOPDIR=${TODO_TOPDIR}
 [ -f ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE ] && . ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE || VERSION="@DEV_VERSION@"
 
 version() { sed -e 's/^    //' <<EndVersion
