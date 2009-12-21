@@ -6,6 +6,10 @@ h2. This branch
 
 I've made this branch to be stowable so I may put it into my stowed bindir
 
+to install todo.sh into the directory ~/stowdir/bin/ run this command from top-level directory:
+
+    stow -t ~/stowdir/bin/ todo-source
+
 h2. "Downloads":http://github.com/ginatrapani/todo.txt-cli/downloads
 
 "Download the latest stable release":http://github.com/ginatrapani/todo.txt-cli/downloads for use on your desktop or server.
