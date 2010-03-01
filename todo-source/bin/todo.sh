@@ -4,18 +4,18 @@
 # Place the .todo/config file in your home directory or use the -d option for a custom location.
 
 TODO_TOPDIR=$(dirname "$0")
-[ -f ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE ] && . ${TODO_TOPDIR}/../lib/TODO-VERSION-FILE || VERSION="@DEV_VERSION@"
+[ -f VERSION-FILE ] && . VERSION-FILE || VERSION="@DEV_VERSION@"
+version() {
+    cat <<-EndVersion
+		TODO.TXT Command Line Interface v$VERSION
 
-version() { sed -e 's/^    //' <<EndVersion
-        TODO.TXT Command Line Interface v$VERSION
-        
-        First release: 5/11/2006
-        Original conception by: Gina Trapani (http://ginatrapani.org)
-        Contributors: http://github.com/ginatrapani/todo.txt-cli/network
-        License: GPL, http://www.gnu.org/copyleft/gpl.html
-        More information and mailing list at http://todotxt.com
-        Code repository: http://github.com/ginatrapani/todo.txt-cli/tree/master
-EndVersion
+		First release: 5/11/2006
+		Original conception by: Gina Trapani (http://ginatrapani.org)
+		Contributors: http://github.com/ginatrapani/todo.txt-cli/network
+		License: GPL, http://www.gnu.org/copyleft/gpl.html
+		More information and mailing list at http://todotxt.com
+		Code repository: http://github.com/ginatrapani/todo.txt-cli/tree/master
+	EndVersion
     exit 1
 }
 
@@ -28,202 +28,202 @@ oneline_usage="$TODO_SH [-fhpantvV] [-d todo_config] action [task_number] [task_
 
 usage()
 {
-    sed -e 's/^    //' <<EndUsage
-    Usage: $oneline_usage
-    Try '$TODO_SH -h' for more information.
-EndUsage
+    cat <<-EndUsage
+		Usage: $oneline_usage
+		Try '$TODO_SH -h' for more information.
+	EndUsage
     exit 1
 }
 
 shorthelp()
 {
-    sed -e 's/^    //' <<EndHelp
-      Usage: $oneline_usage
+    cat <<-EndHelp
+		  Usage: $oneline_usage
 
-      Actions:
-        add|a "THING I NEED TO DO +project @context"
-        addto DEST "TEXT TO ADD"
-        addm "THINGS I NEED TO DO
-              MORE THINGS I NEED TO DO"
-        append|app NUMBER "TEXT TO APPEND"
-        archive
-        command [ACTIONS]
-        del|rm NUMBER [TERM]
-        dp|depri NUMBER
-        do NUMBER
-        help
-        list|ls [TERM...]
-        listall|lsa [TERM...]
-        listcon|lsc
-        listfile|lf SRC [TERM...]
-        listpri|lsp [PRIORITY]
-        listproj|lsprj
-        move|mv NUMBER DEST [SRC]
-        prepend|prep NUMBER "TEXT TO PREPEND"
-        pri|p NUMBER PRIORITY
-        replace NUMBER "UPDATED TODO"
-        report
+		  Actions:
+		    add|a "THING I NEED TO DO +project @context"
+		    addto DEST "TEXT TO ADD"
+		    addm "THINGS I NEED TO DO
+		          MORE THINGS I NEED TO DO"
+		    append|app NUMBER "TEXT TO APPEND"
+		    archive
+		    command [ACTIONS]
+		    del|rm NUMBER [TERM]
+		    dp|depri NUMBER
+		    do NUMBER
+		    help
+		    list|ls [TERM...]
+		    listall|lsa [TERM...]
+		    listcon|lsc
+		    listfile|lf SRC [TERM...]
+		    listpri|lsp [PRIORITY]
+		    listproj|lsprj
+		    move|mv NUMBER DEST [SRC]
+		    prepend|prep NUMBER "TEXT TO PREPEND"
+		    pri|p NUMBER PRIORITY
+		    replace NUMBER "UPDATED TODO"
+		    report
 
-      See "help" for more details.
-EndHelp
+		  See "help" for more details.
+	EndHelp
     exit 0
 }
 
 help()
 {
-    sed -e 's/^    //' <<EndHelp
-      Usage: $oneline_usage
+    cat <<-EndHelp
+		  Usage: $oneline_usage
 
-      Actions:
-        add "THING I NEED TO DO +project @context"
-        a "THING I NEED TO DO +project @context"
-          Adds THING I NEED TO DO to your todo.txt file on its own line.
-          Project and context notation optional.
-          Quotes optional.
+		  Actions:
+		    add "THING I NEED TO DO +project @context"
+		    a "THING I NEED TO DO +project @context"
+		      Adds THING I NEED TO DO to your todo.txt file on its own line.
+		      Project and context notation optional.
+		      Quotes optional.
 
-        addm "FIRST THING I NEED TO DO +project1 @context
-        SECOND THING I NEED TO DO +project2 @context"
-          Adds FIRST THING I NEED TO DO to your todo.txt on its own line and
-          Adds SECOND THING I NEED TO DO to you todo.txt on its own line.
-          Project and context notation optional.
-          Quotes optional.
+		    addm "FIRST THING I NEED TO DO +project1 @context
+		    SECOND THING I NEED TO DO +project2 @context"
+		      Adds FIRST THING I NEED TO DO to your todo.txt on its own line and
+		      Adds SECOND THING I NEED TO DO to you todo.txt on its own line.
+		      Project and context notation optional.
+		      Quotes optional.
 
-        addto DEST "TEXT TO ADD"
-          Adds a line of text to any file located in the todo.txt directory.
-          For example, addto inbox.txt "decide about vacation"
+		    addto DEST "TEXT TO ADD"
+		      Adds a line of text to any file located in the todo.txt directory.
+		      For example, addto inbox.txt "decide about vacation"
 
-        append NUMBER "TEXT TO APPEND"
-        app NUMBER "TEXT TO APPEND"
-          Adds TEXT TO APPEND to the end of the todo on line NUMBER.
-          Quotes optional.
+		    append NUMBER "TEXT TO APPEND"
+		    app NUMBER "TEXT TO APPEND"
+		      Adds TEXT TO APPEND to the end of the todo on line NUMBER.
+		      Quotes optional.
 
-        archive
-          Moves done items from todo.txt to done.txt and removes blank lines.
+		    archive
+		      Moves done items from todo.txt to done.txt and removes blank lines.
 
-        command [ACTIONS]
-          Runs the remaining arguments using only todo.sh builtins.
-          Will not call any .todo.actions.d scripts.
+		    command [ACTIONS]
+		      Runs the remaining arguments using only todo.sh builtins.
+		      Will not call any .todo.actions.d scripts.
 
-        del NUMBER [TERM]
-        rm NUMBER [TERM]
-          Deletes the item on line NUMBER in todo.txt.
-          If term specified, deletes only the term from the line.
+		    del NUMBER [TERM]
+		    rm NUMBER [TERM]
+		      Deletes the item on line NUMBER in todo.txt.
+		      If term specified, deletes only the term from the line.
 
-        depri NUMBER
-        dp NUMBER
-          Deprioritizes (removes the priority) from the item
-          on line NUMBER in todo.txt.
+		    depri NUMBER
+		    dp NUMBER
+		      Deprioritizes (removes the priority) from the item
+		      on line NUMBER in todo.txt.
 
-        do NUMBER[, NUMBER, NUMBER, ...]
-          Marks item(s) on line NUMBER as done in todo.txt.
+		    do NUMBER[, NUMBER, NUMBER, ...]
+		      Marks item(s) on line NUMBER as done in todo.txt.
 
-        help
-          Display this help message.
+		    help
+		      Display this help message.
 
-        list [TERM...]
-        ls [TERM...]
-          Displays all todo's that contain TERM(s) sorted by priority with line
-          numbers.  If no TERM specified, lists entire todo.txt.
+		    list [TERM...]
+		    ls [TERM...]
+		      Displays all todo's that contain TERM(s) sorted by priority with line
+		      numbers.  If no TERM specified, lists entire todo.txt.
 
-        listall [TERM...]
-        lsa [TERM...]
-          Displays all the lines in todo.txt AND done.txt that contain TERM(s)
-          sorted by priority with line  numbers.  If no TERM specified, lists
-          entire todo.txt AND done.txt concatenated and sorted.
+		    listall [TERM...]
+		    lsa [TERM...]
+		      Displays all the lines in todo.txt AND done.txt that contain TERM(s)
+		      sorted by priority with line  numbers.  If no TERM specified, lists
+		      entire todo.txt AND done.txt concatenated and sorted.
 
-        listcon
-        lsc
-          Lists all the task contexts that start with the @ sign in todo.txt.
+		    listcon
+		    lsc
+		      Lists all the task contexts that start with the @ sign in todo.txt.
 
-        listfile SRC [TERM...]
-        lf SRC [TERM...]
-          Displays all the lines in SRC file located in the todo.txt directory,
-          sorted by priority with line  numbers.  If TERM specified, lists
-          all lines that contain TERM in SRC file.
+		    listfile SRC [TERM...]
+		    lf SRC [TERM...]
+		      Displays all the lines in SRC file located in the todo.txt directory,
+		      sorted by priority with line  numbers.  If TERM specified, lists
+		      all lines that contain TERM in SRC file.
 
-        listpri [PRIORITY]
-        lsp [PRIORITY]
-          Displays all items prioritized PRIORITY.
-          If no PRIORITY specified, lists all prioritized items.
+		    listpri [PRIORITY]
+		    lsp [PRIORITY]
+		      Displays all items prioritized PRIORITY.
+		      If no PRIORITY specified, lists all prioritized items.
 
-        listproj
-        lsprj
-          Lists all the projects that start with the + sign in todo.txt.
+		    listproj
+		    lsprj
+		      Lists all the projects that start with the + sign in todo.txt.
 
-        move NUMBER DEST [SRC]
-        mv NUMBER DEST [SRC]
-          Moves a line from source text file (SRC) to destination text file (DEST).
-          Both source and destination file must be located in the directory defined
-          in the configuration directory.  When SRC is not defined
-          it's by default todo.txt.
+		    move NUMBER DEST [SRC]
+		    mv NUMBER DEST [SRC]
+		      Moves a line from source text file (SRC) to destination text file (DEST).
+		      Both source and destination file must be located in the directory defined
+		      in the configuration directory.  When SRC is not defined
+		      it's by default todo.txt.
 
-        prepend NUMBER "TEXT TO PREPEND"
-        prep NUMBER "TEXT TO PREPEND"
-          Adds TEXT TO PREPEND to the beginning of the todo on line NUMBER.
-          Quotes optional.
+		    prepend NUMBER "TEXT TO PREPEND"
+		    prep NUMBER "TEXT TO PREPEND"
+		      Adds TEXT TO PREPEND to the beginning of the todo on line NUMBER.
+		      Quotes optional.
 
-        pri NUMBER PRIORITY
-        p NUMBER PRIORITY
-          Adds PRIORITY to todo on line NUMBER.  If the item is already
-          prioritized, replaces current priority with new PRIORITY.
-          PRIORITY must be an uppercase letter between A and Z.
+		    pri NUMBER PRIORITY
+		    p NUMBER PRIORITY
+		      Adds PRIORITY to todo on line NUMBER.  If the item is already
+		      prioritized, replaces current priority with new PRIORITY.
+		      PRIORITY must be an uppercase letter between A and Z.
 
-        replace NUMBER "UPDATED TODO"
-          Replaces todo on line NUMBER with UPDATED TODO.
+		    replace NUMBER "UPDATED TODO"
+		      Replaces todo on line NUMBER with UPDATED TODO.
 
-        report
-          Adds the number of open todo's and closed done's to report.txt.
-
-
-
-      Options:
-        -@
-            Hide context names in list output. Use twice to show context
-            names (default).
-        -+
-            Hide project names in list output. Use twice to show project
-            names (default).
-        -d CONFIG_FILE
-            Use a configuration file other than the default ~/.todo/config
-        -f
-            Forces actions without confirmation or interactive input
-        -h
-            Display a short help message
-        -p
-            Plain mode turns off colors
-        -P
-            Hide priority labels in list output. Use twice to show
-            priority labels (default).
-        -a
-            Don't auto-archive tasks automatically on completion
-        -n
-            Don't preserve line numbers; automatically remove blank lines
-            on task deletion
-        -t
-            Prepend the current date to a task automatically
-            when it's added.
-        -v
-            Verbose mode turns on confirmation messages
-        -vv
-            Extra verbose mode prints some debugging information
-        -V
-            Displays version, license and credits
-        -x
-            Disables TODOTXT_FINAL_FILTER
+		    report
+		      Adds the number of open todo's and closed done's to report.txt.
 
 
-      Environment variables:
-        TODOTXT_AUTO_ARCHIVE=0          is same as option -a
-        TODOTXT_CFG_FILE=CONFIG_FILE    is same as option -d CONFIG_FILE
-        TODOTXT_FORCE=1                 is same as option -f
-        TODOTXT_PRESERVE_LINE_NUMBERS=0 is same as option -n
-        TODOTXT_PLAIN=1                 is same as option -p
-        TODOTXT_DATE_ON_ADD=1           is same as option -t
-        TODOTXT_VERBOSE=1               is same as option -v
-        TODOTXT_DEFAULT_ACTION=""       run this when called with no arguments
-        TODOTXT_SORT_COMMAND="sort ..." customize list output
-        TODOTXT_FINAL_FILTER="sed ..."  customize list after color, P@+ hiding
-EndHelp
+
+		  Options:
+		    -@
+		        Hide context names in list output. Use twice to show context
+		        names (default).
+		    -+
+		        Hide project names in list output. Use twice to show project
+		        names (default).
+		    -d CONFIG_FILE
+		        Use a configuration file other than the default ~/.todo/config
+		    -f
+		        Forces actions without confirmation or interactive input
+		    -h
+		        Display a short help message
+		    -p
+		        Plain mode turns off colors
+		    -P
+		        Hide priority labels in list output. Use twice to show
+		        priority labels (default).
+		    -a
+		        Don't auto-archive tasks automatically on completion
+		    -n
+		        Don't preserve line numbers; automatically remove blank lines
+		        on task deletion
+		    -t
+		        Prepend the current date to a task automatically
+		        when it's added.
+		    -v
+		        Verbose mode turns on confirmation messages
+		    -vv
+		        Extra verbose mode prints some debugging information
+		    -V
+		        Displays version, license and credits
+		    -x
+		        Disables TODOTXT_FINAL_FILTER
+
+
+		  Environment variables:
+		    TODOTXT_AUTO_ARCHIVE=0          is same as option -a
+		    TODOTXT_CFG_FILE=CONFIG_FILE    is same as option -d CONFIG_FILE
+		    TODOTXT_FORCE=1                 is same as option -f
+		    TODOTXT_PRESERVE_LINE_NUMBERS=0 is same as option -n
+		    TODOTXT_PLAIN=1                 is same as option -p
+		    TODOTXT_DATE_ON_ADD=1           is same as option -t
+		    TODOTXT_VERBOSE=1               is same as option -v
+		    TODOTXT_DEFAULT_ACTION=""       run this when called with no arguments
+		    TODOTXT_SORT_COMMAND="sort ..." customize list output
+		    TODOTXT_FINAL_FILTER="sed ..."  customize list after color, P@+ hiding
+	EndHelp
 
     if [ -d "$TODO_ACTIONS_DIR" ]
     then
@@ -259,12 +259,17 @@ cleaninput()
     # Cleanup the input
     # Replace newlines with spaces Always
     input=`echo $input | tr -d '\r|\n'`
-		
+
+    # Storing regexp in variable fixes quoting difference between
+    # bash v3.1.x and v3.2.x see:
+    # http://stackoverflow.com/questions/218156/bash-regex-with-quotes
+    action_regexp='^(append|app|prepend|prep|replace)$'
+
     # Check which action we are being used in as this affects what cleaning we do
-    if [[ $action =~ ^(append|app|prepend|prep|replace)$ ]]; then
+    if [[ $action =~ $action_regexp ]]; then
         # These actions use sed and & as the matched string so escape it
         input=`echo $input | sed 's/\&/\\\&/g'`
-		fi
+    fi
 }
 
 archive()
@@ -290,7 +295,7 @@ do
         ## HIDE_CONTEXT_NAMES starts at zero (false); increment it to one
         ##   (true) the first time this flag is seen. Each time the flag
         ##   is seen after that, increment it again so that an even
-        ##   number hides project names and an odd number shows project
+        ##   number shows context names and an odd number hides context
         ##   names.
         : $(( HIDE_CONTEXT_NAMES++ ))
         if [ $(( $HIDE_CONTEXT_NAMES % 2 )) -eq 0 ]
@@ -306,7 +311,7 @@ do
         ## HIDE_PROJECT_NAMES starts at zero (false); increment it to one
         ##   (true) the first time this flag is seen. Each time the flag
         ##   is seen after that, increment it again so that an even
-        ##   number hides project names and an odd number shows project
+        ##   number shows project names and an odd number hides project
         ##   names.
         : $(( HIDE_PROJECT_NAMES++ ))
         if [ $(( $HIDE_PROJECT_NAMES % 2 )) -eq 0 ]
@@ -340,8 +345,8 @@ do
         ## HIDE_PRIORITY_LABELS starts at zero (false); increment it to one
         ##   (true) the first time this flag is seen. Each time the flag
         ##   is seen after that, increment it again so that an even
-        ##   number hides project names and an odd number shows project
-        ##   names.
+        ##   number shows priority labels and an odd number hides priority
+        ##   labels.
         : $(( HIDE_PRIORITY_LABELS++ ))
         if [ $(( $HIDE_PRIORITY_LABELS % 2 )) -eq 0 ]
         then
@@ -469,6 +474,24 @@ fi
 # === HEAVY LIFTING ===
 shopt -s extglob
 
+_addto() {
+    file="$1"
+    input="$2"
+    cleaninput $input
+
+    if [[ $TODOTXT_DATE_ON_ADD = 1 ]]; then
+        now=`date '+%Y-%m-%d'`
+        input="$now $input"
+    fi
+    echo "$input" >> "$file"
+    [ $TODOTXT_VERBOSE -gt 0 ] && {
+        TASKNUM=$(sed -n '$ =' "$file")
+        BASE=$(basename "$file")
+        PREFIX=$(echo ${BASE%%.[^.]*} | tr [a-z] [A-Z])
+        echo "${PREFIX}: '$input' added on line $TASKNUM."
+    }
+}
+
 _list() {
     local FILE="$1"
     ## If the file starts with a "/" use absolute path. Otherwise,
@@ -568,11 +591,13 @@ _list() {
     echo -ne "$filtered_items${filtered_items:+\n}"
 
     if [ $TODOTXT_VERBOSE -gt 0 ]; then
+        BASE=$(basename "$FILE")
+        PREFIX=$(echo ${BASE%%.[^.]*} | tr [a-z] [A-Z])
         NUMTASKS=$( echo -ne "$filtered_items" | sed -n '$ =' )
         TOTALTASKS=$( echo -ne "$items" | sed -n '$ =' )
 
         echo "--"
-        echo "TODO: ${NUMTASKS:-0} of ${TOTALTASKS:-0} tasks shown from $FILE"
+        echo "${PREFIX}: ${NUMTASKS:-0} of ${TOTALTASKS:-0} tasks shown"
     fi
     if [ $TODOTXT_VERBOSE -gt 1 ]
     then
@@ -612,15 +637,7 @@ case $action in
         shift
         input=$*
     fi
-    cleaninput $input
-
-    if [[ $TODOTXT_DATE_ON_ADD = 1 ]]; then
-        now=`date '+%Y-%m-%d'`
-        input="$now $input"
-    fi
-    echo "$input" >> "$TODO_FILE"
-    TASKNUM=$(sed -n '$ =' "$TODO_FILE")
-    [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: '$input' added on line $TASKNUM."
+    _addto "$TODO_FILE" "$input"
     cleanup;;
 
 "addm")
@@ -640,13 +657,7 @@ case $action in
 
     # Treat each line seperately
     for line in $input ; do
-      if [[ $TODOTXT_DATE_ON_ADD = 1 ]]; then
-          now=`date '+%Y-%m-%d'`
-          line="$now $line"
-      fi
-      echo "$line" >> "$TODO_FILE"
-      TASKNUM=$(sed -n '$ =' "$TODO_FILE")
-      [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: '$line' added on line $TASKNUM."
+        _addto "$TODO_FILE" "$line"
     done
     IFS=$SAVEIFS
     cleanup;;
@@ -660,9 +671,7 @@ case $action in
     input=$*
 
     if [ -f "$dest" ]; then
-        echo "$input" >> "$dest"
-        TASKNUM=$(sed -n '$ =' "$dest")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: '$input' added to $dest on line $TASKNUM."
+        _addto "$dest" "$input"
     else
         echo "TODO: Destination file $dest does not exist."
     fi
@@ -685,8 +694,10 @@ case $action in
     cleaninput $input
 
     if sed -i.bak $item" s|^.*|& $input|" "$TODO_FILE"; then
-        newtodo=$(sed "$item!d" "$TODO_FILE")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"
+        [ $TODOTXT_VERBOSE -gt 0 ] && {
+            newtodo=$(sed "$item!d" "$TODO_FILE")
+            echo "$item: $newtodo"
+        }
     else
         echo "TODO: Error appending task $item."
     fi
@@ -747,9 +758,11 @@ case $action in
     if [ "$?" -eq 0 ]; then
         #it's all good, continue
         sed -i.bak -e $item"s/^(.) //" "$TODO_FILE"
-        NEWTODO=$(sed "$item!d" "$TODO_FILE")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "`echo "$item: $NEWTODO"`"
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: $item deprioritized."
+        [ $TODOTXT_VERBOSE -gt 0 ] && {
+            NEWTODO=$(sed "$item!d" "$TODO_FILE")
+            echo "`echo "$item: $NEWTODO"`"
+            echo "TODO: $item deprioritized."
+        }
         cleanup
     else
         die "$errmsg"
@@ -757,15 +770,15 @@ case $action in
 
 "do" )
     errmsg="usage: $TODO_SH do ITEM#"
-		# shift so we get arguments to the do request
-		shift;
+    # shift so we get arguments to the do request
+    shift;
 
-		# Split multiple do's, if comma seperated change to whitespace sepereated
-		# Loop the 'do' function for each item
-		for item in `echo $* | tr ',' ' '`; do 
+    # Split multiple do's, if comma seperated change to whitespace sepereated
+    # Loop the 'do' function for each item
+    for item in `echo $* | tr ',' ' '`; do 
     	[ -z "$item" ] && die "$errmsg"
     	[[ "$item" = +([0-9]) ]] || die "$errmsg"
-		
+
     	todo=$(sed "$item!d" "$TODO_FILE")
     	[ -z "$todo" ] && die "$item: No such todo."
 
@@ -775,21 +788,29 @@ case $action in
         # remove priority once item is done
         sed -i.bak $item"s/^(.) //" "$TODO_FILE"
         sed -i.bak $item"s|^|&x $now |" "$TODO_FILE"
-        newtodo=$(sed "$item!d" "$TODO_FILE")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: $item marked as done."
+        [ $TODOTXT_VERBOSE -gt 0 ] && {
+            newtodo=$(sed "$item!d" "$TODO_FILE")
+            echo "$item: $newtodo"
+            echo "TODO: $item marked as done."
+        }
       else
         echo "$item is already marked done"
       fi
-		done
-	
+    done
+
     if [ $TODOTXT_AUTO_ARCHIVE = 1 ]; then
         archive
     fi
     cleanup ;;
 
 "help" )
-    help
+    if [ -t 1 ] ; then # STDOUT is a TTY
+        if (exec which ${PAGER:-less} 2>/dev/null >/dev/null); then
+            # we have a working PAGER (or less as a default)
+            help | exec ${PAGER:-less}
+        fi
+    fi
+    help # just in case something failed above, we go ahead and just spew to STDOUT
     ;;
 
 "list" | "ls" )
@@ -913,28 +934,32 @@ case $action in
     fi
     cleaninput $input
 
-		# Test for then set priority
-		if [ `sed "$item!d" "$TODO_FILE"|grep -c "^(\\w)"` -eq 1 ]; then
-			priority=$(sed "$item!d" "$TODO_FILE" | awk -F '\\(|\\)' '{print $2}')
-		fi
+    # Test for then set priority
+    if [ `sed "$item!d" "$TODO_FILE"|grep -c "^(\\w)"` -eq 1 ]; then
+        priority=$(sed "$item!d" "$TODO_FILE" | awk -F '\\(|\\)' '{print $2}')
+    fi
 
-		# If priority isn't set prepend
-		if [ -z $priority ]; then 
+    # If priority isn't set prepend
+    if [ -z $priority ]; then 
     	if sed -i.bak $item" s|^.*|$input &|" "$TODO_FILE"; then
-       	newtodo=$(sed "$item!d" "$TODO_FILE")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"
+            [ $TODOTXT_VERBOSE -gt 0 ] && {
+                newtodo=$(sed "$item!d" "$TODO_FILE")
+                echo "$item: $newtodo"
+            }
     	else
-       	echo "TODO: Error prepending task $item."
-			fi
-		# If priority is set, remove priority, prepend and add back priority
-		else
-			if sed -i.bak -e "$item s/^(.) //" -e "$item s|^.*|\($priority\) $1 &|" "$TODO_FILE"; then
-        newtodo=$(sed "$item!d" "$TODO_FILE")
-       	[ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"
+            echo "TODO: Error prepending task $item."
+        fi
+    # If priority is set, remove priority, prepend and add back priority
+    else
+        if sed -i.bak -e "$item s/^(.) //" -e "$item s|^.*|\($priority\) $1 &|" "$TODO_FILE"; then
+            [ $TODOTXT_VERBOSE -gt 0 ] && {
+                newtodo=$(sed "$item!d" "$TODO_FILE")
+                echo "$item: $newtodo"
+            }
     	else
-       	echo "TODO: Error prepending task $item."
+            echo "TODO: Error prepending task $item."
     	fi
-		fi
+    fi
     cleanup;;
 
 "pri" | "p" )
@@ -953,9 +978,11 @@ note: PRIORITY must be anywhere from A to Z."
     if [ "$?" -eq 0 ]; then
         #it's all good, continue
         sed -i.bak -e $item"s/^(.) //" -e $item"s/^/($newpri) /" "$TODO_FILE"
-        NEWTODO=$(sed "$item!d" "$TODO_FILE")
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "`echo "$item: $NEWTODO"`"
-        [ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: $item prioritized ($newpri)."
+        [ $TODOTXT_VERBOSE -gt 0 ] && {
+            NEWTODO=$(sed "$item!d" "$TODO_FILE")
+            echo "`echo "$item: $NEWTODO"`"
+            echo "TODO: $item prioritized ($newpri)."
+        }
         cleanup
     else
         die "$errmsg"
@@ -990,10 +1017,12 @@ note: PRIORITY must be anywhere from A to Z."
     else
       sed -i.bak -e "$item s/^(.) //" -e "$item s|^.*|\($priority\) $1|" "$TODO_FILE"
     fi
-    [ $TODOTXT_VERBOSE -gt 0 ] && NEWTODO=$(head -$item "$TODO_FILE" | tail -1)
-    [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $todo"
-    [ $TODOTXT_VERBOSE -gt 0 ] && echo "replaced with"
-    [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $NEWTODO"
+    [ $TODOTXT_VERBOSE -gt 0 ] && {
+        NEWTODO=$(head -$item "$TODO_FILE" | tail -1)
+        echo "$item: $todo"
+        echo "replaced with"
+        echo "$item: $NEWTODO"
+    }
     cleanup;;
 
 "report" )
